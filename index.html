@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>move-frame-time-v</title>
+    <style>
+        #box{
+            width:100px;
+            height:100px;
+            background:red;
+            margin-left: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        var oBox = document.getElementById("box");
+        move(oBox,'width' , '500px' ,  2000);
+        function move(obj,attr,target,time){
+            var startVal = parseInt(getStyle(obj, attr));
+            var endVal = parseInt(target);
+            var startTime = new Date();
+            var timer = setInterval(function(){
+                var nowTime = new Date();
+                var prop = (nowTime - startTime) / time;
+                if (prop > 1) {
+                    prop = 1;
+                    clearInterval(timer);
+                }
+                var s = prop*(endVal - startVal) + startVal;
+                obj.style[attr] = s + 'px';
+            },13);
+            function getStyle( obj , attr ){
+                return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj)[attr];
+            };
+        }
+    </script>
+</body>
+</html>
